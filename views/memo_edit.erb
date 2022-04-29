@@ -1,12 +1,18 @@
 <div class="form-wrapper">
   <form action="/memo/<%= @memo[:id] %>" method="post">
-    <label for="title">タイトル</label>
-    <input id="title" name="title" type="text" value="<%= @memo[:title] %>">
-    <label for="content">内容</label>
-    <textarea name="content" id="content" cols="30" rows="10">
-      <%= @memo[:content] %>
-    </textarea>
-    <input type="hidden" name="_method" value="patch">
-    <input type="submit" value="変更">
+    <div class="form-item">
+      <label for="title">タイトル</label><br>
+      <input id="title" name="title" type="text" value="<%= @memo[:title] %>">
+    </div>
+    <div class="form-item">
+      <label for="content">内容</label><br>
+      <textarea name="content" id="content" cols="30" rows="10">
+        <%= @memo[:content] %>
+      </textarea>
+    </div>
+    <div class="form-item">
+      <input type="hidden" name="_method" value="patch">
+      <input type="submit" value="変更" class="btn">
+    </div>
   </form>
 </div>

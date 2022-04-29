@@ -17,6 +17,10 @@ before %r{/memo/([1-9]+[0-9]*)[/edit]*} do |id|
   @memo = find_memo(id)
 end
 
+not_found do
+  erb :error_page
+end
+
 get '/' do
   erb :index
 end
@@ -36,11 +40,19 @@ post '/memo' do
 end
 
 get '/memo/:id' do
-  erb :memo
+  if @memo.nil?
+    erb :error_page
+  else
+    erb :memo
+  end
 end
 
 get '/memo/:id/edit' do
-  erb :memo_edit
+  if @memo.nil?
+    erb :error_page
+  else
+    erb :memo_edit
+  end
 end
 
 patch '/memo/:id' do

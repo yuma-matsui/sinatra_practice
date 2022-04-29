@@ -1,18 +1,19 @@
-<div>
+<div class="main-container">
+  <div class="memo-lists">
+    <h1>メモ一覧</h1>
+    <ul>
+      <% @memos.each do |memo| %>
+        <li>
+          <a href="/memo/<%= memo[:id] %>" class="memo-item"><%= memo[:title] %></a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
   <nav>
     <ul>
       <li>
-        <a href="/memo">追加</a>
+        <a href="/memo" class="btn slide-btn"><span></span>新規作成</a>
       </li>
     </ul>
   </nav>
-  <div class="main-container">
-  <ul>
-    <% @memos.each do |memo| %>
-      <li>
-        <a href="/memo/<%= memo[:id] %>"><%= memo[:title] %></a>
-      </li>
-    <% end %>
-  </ul>
-</div>
 </div>

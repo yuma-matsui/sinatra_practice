@@ -1,0 +1,160 @@
+/* 共通 */
+body {
+  font-size: 16px;
+  font-family: 'Comforter', cursive;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+  font-size: 1.125rem;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.main-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn {
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: .975rem;
+  padding: 8px 12px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.btn.slide-btn {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all .3s;
+}
+
+.btn.slide-btn:hover {
+  color: #fff;
+}
+
+.btn.slide-btn span {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-color: darkred;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+  transition: transform .3s;
+  z-index: -1;
+}
+
+.btn.slide-btn:hover span {
+  transform: none;
+}
+/* 共通ここまで */
+
+/* ヘッダー */
+header {
+  display: flex;
+  justify-content: center;
+}
+
+header h1 a {
+  font-size: 2rem;
+  color: darkred;
+}
+/* ヘッダーここまで */
+
+/* 一覧ページ */
+.memo-lists {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.memo-lists h1 {
+  font-size: 1.5rem;
+}
+
+.memo-lists li {
+  margin-top: 8px;
+}
+
+.memo-item {
+  font-size: 1.125rem;
+  letter-spacing: 2px;
+}
+
+.main-container nav{
+  margin-top: 15px;
+}
+
+/* 一覧ページここまで */
+
+/* 詳細ページ */
+.memo-content {
+  font-size: 1.25rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.buttons form {
+  margin-left: 8px;
+}
+
+input.btn {
+  color: darkred;
+  background-color: #fff;
+}
+
+input.btn:hover {
+  background-color: darkred;
+  color: #fff;
+}
+/* 詳細ページここまで */
+
+/* 投稿フォーム共通 */
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-wrapper input,
+.form-wrapper textarea {
+  display: inline-block;
+  width: 100%;
+  margin-top: 3px;
+}
+
+.form-item {
+  margin-bottom: 10px;
+}
+
+.form-item .btn {
+  padding: 5px 0;
+  background-color: darkred;
+  color: #fff;
+  border: 1px solid #000;
+}
+/* 投稿フォーム共通ここまで */
