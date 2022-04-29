@@ -1,0 +1,18 @@
+<div>
+  <nav>
+    <ul>
+      <li>
+        <a href="/memo">追加</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="main-container">
+  <ul>
+    <% @memos.each do |memo| %>
+      <li>
+        <a href="/memo/<%= memo[:id] %>"><%= memo[:title] %></a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+</div>
