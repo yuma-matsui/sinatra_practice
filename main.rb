@@ -33,6 +33,7 @@ post '/memo' do
   if params_blank?(params)
     redirect to('/memo')
   else
+    binding.irb
     memo = formated_params(params)
     create_memo(memo)
     redirect to('/')
@@ -67,6 +68,6 @@ patch '/memo/:id' do
 end
 
 delete '/memo/:id' do
-  delete_memo(@memo)
+  delete_memo
   redirect to('/')
 end
