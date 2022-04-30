@@ -1,11 +1,11 @@
 <div class="main-container">
   <div class="memo-lists">
-    <% if @memos.size > 0 %>
+    <% if !@memos.nil? %>
       <h1>メモ一覧</h1>
       <ul>
         <% @memos.each do |memo| %>
           <li>
-            <a href="/memo/<%= memo[:id] %>" class="memo-item"><%= memo[:title] %></a>
+            <a href="/memo/<%= memo['id'] %>" class="memo-item"><%= memo['title'] %></a>
           </li>
         <% end %>
       </ul>
