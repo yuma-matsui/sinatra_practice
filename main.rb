@@ -6,14 +6,14 @@ require_relative 'helpers/crud_helper'
 require_relative 'helpers/get_memo_helper'
 require_relative 'helpers/params_helper'
 
-STORAGE_FILE = 'storage/memo.txt'
+DB_NAME = 'mymemo'
 
 before '/*' do
-  @memos = extract_memos
+  @mymemo_db = PG.connect(dbname: DB_NAME)
+  @memos = all_memos
 end
 
 before %r{/memo/([1-9]+[0-9]*)[/edit]*} do |id|
-  id = id.to_i
   @memo = find_memo(id)
 end
 
@@ -57,12 +57,12 @@ end
 
 patch '/memo/:id' do
   if params_blank?(params)
-    redirect to("/memo/#{@memo[:id]}/edit")
+    redirect to("/memo/#{@memo['id']}/edit")
   else
     memo_params = remove_unnecessary_entries(params)
     edited_memo = formated_params(memo_params)
     edit_memo(edited_memo)
-    redirect to("/memo/#{@memo[:id]}")
+    redirect to("/memo/#{@memo['id']}")
   end
 end
 

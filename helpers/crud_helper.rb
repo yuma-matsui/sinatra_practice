@@ -2,7 +2,7 @@
 
 helpers do
   def create_memo(memo)
-    File.open(STORAGE_FILE, 'a+') { |f| f.write(formated_memo(memo)) }
+    @mymemo_db.exec("INSERT INTO memo (title, content) VALUES ('#{memo['title']}', '#{memo['content']}');")
   end
 
   def formated_memo(memo)
