@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
+require 'pg'
+
 helpers do
-  def extract_memos
-    File.read(STORAGE_FILE).split("\n").map.with_index do |memo, idx|
-      title, content = memo.split(',')
-      { id: idx + 1, title: title, content: content }
-    end
+  def all_memos
+    @mymemo_db.exec('SELECT * FROM memo ORDER BY created_at;')
   end
 
   def find_memo(id)
-    @memos.find { |memo| memo[:id] == id }
+    @memos.find { |memo| memo['id'] == id }
   end
 end
