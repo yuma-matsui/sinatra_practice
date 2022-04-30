@@ -33,7 +33,6 @@ post '/memo' do
   if params_blank?(params)
     redirect to('/memo')
   else
-    binding.irb
     memo = formated_params(params)
     create_memo(memo)
     redirect to('/')
