@@ -10,9 +10,7 @@ helpers do
   end
 
   def edit_memo(edited_memo)
-    id = @memos.find_index(@memo)
-    @memos[id] = edited_memo
-    change_storage_file(@memos)
+    @mymemo_db.exec("UPDATE memo SET title = '#{edited_memo['title']}', content = '#{edited_memo['content']}' WHERE id = '#{@memo['id']}'")
   end
 
   def delete_memo(deleted_memo)
