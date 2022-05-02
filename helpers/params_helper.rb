@@ -11,14 +11,10 @@ helpers do
         params[key] = val.chars.reject { |chr| (chr == "\r") || (chr == "\n") }.join
       end
     end
-    escape_html(params)
+    params
   end
 
   def remove_unnecessary_entries(params)
     params.select { |key| (key == 'title') || (key == 'content') }
-  end
-
-  def escape_html(params)
-    params.each { |key, val| params[key] = Rack::Utils.escape_html(val) }
   end
 end
