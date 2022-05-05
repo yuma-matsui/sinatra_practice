@@ -1,0 +1,23 @@
+<div class="main-container">
+  <div class="memo-lists">
+    <% if @memos.size > 0 %>
+      <h1>メモ一覧</h1>
+      <ul>
+        <% @memos.each do |memo| %>
+          <li>
+            <a href="/memo/<%= memo[:id] %>" class="memo-item"><%= memo[:title] %></a>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <h1>メモを作ろう!</h1>
+    <% end %>
+  </div>
+  <nav>
+    <ul>
+      <li>
+        <a href="/memo" class="btn slide-btn"><span></span>新規作成</a>
+      </li>
+    </ul>
+  </nav>
+</div>
