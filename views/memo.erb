@@ -1,0 +1,11 @@
+<div class="main-container">
+  <h1><%= escape(@memo[1]) %></h1>
+  <p class="memo-content"><%= escape(@memo[2]) %></p>
+</div>
+<div class="buttons">
+  <a href="/memo/<%= @memo[0] %>/edit" class="btn slide-btn"><span></span>変更</a>
+  <form action="/memo/<%= @memo[0] %>" method="post" >
+    <input type="submit" value="削除" class="btn">
+    <input type="hidden" name="_method" value="delete">
+  </form>
+</div>
