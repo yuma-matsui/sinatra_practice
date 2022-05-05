@@ -68,6 +68,12 @@ li {
 .btn.slide-btn:hover span {
   transform: none;
 }
+
+.error-msg {
+  text-align: center;
+  color: red;
+  font-size: 1.25rem;
+}
 /* 共通ここまで */
 
 /* ヘッダー */
