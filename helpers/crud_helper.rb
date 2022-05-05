@@ -1,31 +1,34 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 helpers do
-  def create_memo(memo)
-    File.open(STORAGE_FILE, 'a+') { |f| f.write(formated_memo(memo)) }
+  def extract_memos
+    CSV.read(STORAGE_FILE)
   end
 
-  def formated_memo(memo)
-    memo.values.map(&:strip).join(',').insert(-1, "\n")
+  def find_memo(id)
+    @memos.find { |memo| memo[0] == id }
   end
 
-  def edit_memo(edited_memo)
-    id = @memos.find_index(@memo)
-    @memos[id] = edited_memo
-    change_storage_file(@memos)
+  def create_memo(params)
+    id = @memos.last.nil? ? 1 : @memos.last[0].to_i + 1
+    memo = params.values
+    CSV.open(STORAGE_FILE, 'a+') { |csv| csv << [id, *memo] }
   end
 
-  def delete_memo(deleted_memo)
-    @memos.delete(deleted_memo)
-    change_storage_file(@memos)
+  def edit_memo(params)
+    target_memo = @memos.find { |memo| memo == @memo }
+    target_memo[1..2] = params.values
+    rewrite_file
   end
 
-  def change_storage_file(memos)
-    renewed_memos = remove_id(memos)
-    File.open(STORAGE_FILE, 'w+') { |f| renewed_memos.each { |memo| f.write(formated_memo(memo)) } }
+  def delete_memo
+    @memos.delete(@memo)
+    rewrite_file
   end
 
-  def remove_id(memos)
-    memos.map { |memo| memo.reject { |key| key == :id } }
+  def rewrite_file
+    CSV.open(STORAGE_FILE, 'w+') { |csv| @memos.each { |memo| csv << memo } }
   end
 end

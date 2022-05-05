@@ -2,19 +2,20 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
+require 'cgi'
 require_relative 'helpers/crud_helper'
-require_relative 'helpers/get_memo_helper'
 require_relative 'helpers/params_helper'
+require_relative 'helpers/utility_helper'
 
-STORAGE_FILE = 'storage/memo.txt'
+STORAGE_FILE = 'storage/memo.csv'
 
 before '/*' do
   @memos = extract_memos
 end
 
 before %r{/memo/([1-9]+[0-9]*)[/edit]*} do |id|
-  id = id.to_i
   @memo = find_memo(id)
+  redirect to not_found if @memo.nil?
 end
 
 not_found do
@@ -31,42 +32,34 @@ end
 
 post '/memo' do
   if params_blank?(params)
-    redirect to('/memo')
+    @error_msg = '内容に不備があります'
+    erb :memo_new
   else
-    memo = formated_params(params)
-    create_memo(memo)
+    create_memo(params)
     redirect to('/')
   end
 end
 
 get '/memo/:id' do
-  if @memo.nil?
-    erb :error_page
-  else
-    erb :memo
-  end
+  erb :memo
 end
 
 get '/memo/:id/edit' do
-  if @memo.nil?
-    erb :error_page
-  else
-    erb :memo_edit
-  end
+  erb :memo_edit
 end
 
 patch '/memo/:id' do
   if params_blank?(params)
-    redirect to("/memo/#{@memo[:id]}/edit")
+    @error_msg = '内容に不備があります'
+    erb :memo_edit
   else
     memo_params = remove_unnecessary_entries(params)
-    edited_memo = formated_params(memo_params)
-    edit_memo(edited_memo)
-    redirect to("/memo/#{@memo[:id]}")
+    edit_memo(memo_params)
+    redirect to("/memo/#{@memo[0]}")
   end
 end
 
 delete '/memo/:id' do
-  delete_memo(@memo)
+  delete_memo
   redirect to('/')
 end
