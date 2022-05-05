@@ -15,7 +15,7 @@ end
 
 before %r{/memo/([1-9]+[0-9]*)[/edit]*} do |id|
   @memo = find_memo(id)
-  redirect to not_found if @memo.nil?
+  not_found if @memo.nil?
 end
 
 not_found do
