@@ -1,6 +1,6 @@
 <div class="main-container">
-  <h1><%= @memo['title'] %></h1>
-  <p class="memo-content"><%= @memo['content'] %></p>
+  <h1><%= escape(@memo['title']) %></h1>
+  <p class="memo-content"><%= escape(@memo['content']) %></p>
 </div>
 <div class="buttons">
   <a href="/memo/<%= @memo['id'] %>/edit" class="btn slide-btn"><span></span>変更</a>

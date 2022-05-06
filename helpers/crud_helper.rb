@@ -1,10 +1,20 @@
 # frozen_string_literal: true
 
+require 'pg'
+
 helpers do
+  def all_memos
+    @mymemo_db.exec('SELECT * FROM memo ORDER BY created_at;')
+  end
+
+  def find_memo(id)
+    @memos.find { |memo| memo['id'] == id }
+  end
+
   def create_memo(memo)
     memo = {
-      title: escape(memo['title']),
-      content: escape(memo['content'])
+      title: memo['title'],
+      content: memo['content']
     }
     @mymemo_db.exec('INSERT INTO memo (title, content) VALUES (?, ?);', memo.values)
   end
@@ -19,10 +29,6 @@ helpers do
   end
 
   def delete_memo
-    @mymemo_db.exec('DELETE FROM memo WHERE id = $1;', [escape(@memo['id'])])
-  end
-
-  def escape(string)
-    @mymemo_db.escape_string(string)
+    @mymemo_db.exec('DELETE FROM memo WHERE id = $1;', [@memo['id']])
   end
 end
