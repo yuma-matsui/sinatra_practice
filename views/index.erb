@@ -1,6 +1,6 @@
 <div class="main-container">
   <div class="memo-lists">
-    <% if !@memos.nil? %>
+    <% unless @memos.ntuples == 0 %>
       <h1>メモ一覧</h1>
       <ul>
         <% @memos.each do |memo| %>
