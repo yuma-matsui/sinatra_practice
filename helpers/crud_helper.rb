@@ -16,7 +16,7 @@ helpers do
       title: memo['title'],
       content: memo['content']
     }
-    @mymemo_db.exec('INSERT INTO memo (title, content) VALUES (?, ?);', memo.values)
+    @mymemo_db.exec('INSERT INTO memo (title, content) VALUES ($1, $2);', memo.values)
   end
 
   def edit_memo(edited_memo)
