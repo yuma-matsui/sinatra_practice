@@ -8,8 +8,12 @@ require_relative 'helpers/utility_helper'
 
 DB_NAME = 'mymemo'
 
+configure do
+  set :db, PG::Connection.new(dbname: DB_NAME)
+end
+
 before '/*' do
-  @mymemo_db = PG.connect(dbname: DB_NAME)
+  @mymemo_db = settings.db
   @memos = all_memos
 end
 
