@@ -2,6 +2,6 @@
 
 helpers do
   def params_blank?(params)
-    params['title'].empty? || params['content'].empty?
+    params[:title].empty? || params[:content].empty?
   end
 end
