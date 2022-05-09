@@ -1,34 +1,34 @@
 # frozen_string_literal: true
 
-require 'csv'
+require 'pg'
 
 helpers do
-  def extract_memos
-    CSV.read(STORAGE_FILE)
+  def all_memos
+    @mymemo_db.exec('SELECT * FROM memo ORDER BY created_at;')
   end
 
   def find_memo(id)
-    @memos.find { |memo| memo[0] == id }
+    @memos.find { |memo| memo['id'] == id }
   end
 
-  def create_memo(params)
-    id = @memos.last.nil? ? 1 : @memos.last[0].to_i + 1
-    memo = params.values
-    CSV.open(STORAGE_FILE, 'a+') { |csv| csv << [id, *memo] }
+  def create_memo(memo)
+    memo = {
+      title: memo['title'],
+      content: memo['content']
+    }
+    @mymemo_db.exec('INSERT INTO memo (title, content) VALUES ($1, $2);', memo.values)
   end
 
-  def edit_memo(params)
-    target_memo = @memos.find { |memo| memo == @memo }
-    target_memo[1..2] = params.values
-    rewrite_file
+  def edit_memo(edited_memo)
+    memo = {
+      title: edited_memo['title'],
+      content: edited_memo['content'],
+      id: @memo['id']
+    }
+    @mymemo_db.exec_params('UPDATE memo SET title = $1, content = $2 WHERE id = $3;', memo.values)
   end
 
   def delete_memo
-    @memos.delete(@memo)
-    rewrite_file
-  end
-
-  def rewrite_file
-    CSV.open(STORAGE_FILE, 'w+') { |csv| @memos.each { |memo| csv << memo } }
+    @mymemo_db.exec('DELETE FROM memo WHERE id = $1;', [@memo['id']])
   end
 end

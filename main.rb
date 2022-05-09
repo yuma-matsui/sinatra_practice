@@ -2,15 +2,19 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
-require 'cgi'
 require_relative 'helpers/crud_helper'
 require_relative 'helpers/params_helper'
 require_relative 'helpers/utility_helper'
 
-STORAGE_FILE = 'storage/memo.csv'
+DB_NAME = 'mymemo'
+
+configure do
+  set :db, PG::Connection.new(dbname: DB_NAME)
+end
 
 before '/*' do
-  @memos = extract_memos
+  @mymemo_db = settings.db
+  @memos = all_memos
 end
 
 before %r{/memo/([1-9]+[0-9]*)[/edit]*} do |id|
@@ -53,9 +57,8 @@ patch '/memo/:id' do
     @error_msg = '内容に不備があります'
     erb :memo_edit
   else
-    memo_params = remove_unnecessary_entries(params)
-    edit_memo(memo_params)
-    redirect to("/memo/#{@memo[0]}")
+    edit_memo(params)
+    redirect to("/memo/#{@memo['id']}")
   end
 end
 
